@@ -1,0 +1,81 @@
+{
+    "model_name": {
+      "combined_model_prefix": "MLP_VAE_latent_",
+      "VAE_model_prefix": "VAE_latent_",
+      "VAE_load_pretrained": false,
+      "combined_load_pretrained": false
+    },
+    "training_parameters": {
+      "batch_size": 32,
+      "epochs_VAE": 1000,
+      "epochs_combined": 1000,
+      "learning_rate_VAE": 3e-5,
+      "learning_rate_combined": 1e-4,
+      "optimizer_VAE": "Adam",
+      "optimizer_combined": "Adam",
+      "loss_function_VAE": "CrossEntropyLoss",
+      "loss_function_combined": "CrossEntropyLoss",
+      "early_stopping_VAE": true,
+      "early_stopping_combined": true,
+      "warmup_epochs_VAE": 10,
+      "warmup_epochs_combined": 10,
+      "patience_VAE": 30,
+      "patience_combined": 30,
+      "min_lr_VAE": 1e-7,
+      "min_lr_combined": 1e-7,
+      "gamma_VAE": 0.99,
+      "gamma_combined": 0.99,
+      "weight_decay_VAE": 1e-5,
+      "weight_decay_combined": 1e-5,
+      "alpha_VAE": 2e-5,
+      "alpha_combined": 2e-5 
+    },
+    "paths": {
+      "root_dir": "/hpc/group/youlab/jl841/test/",
+      "data_dir": "/hpc/group/youlab/jl841/test/data/",
+      "model_dir": "/hpc/group/youlab/jl841/test/models/",
+      "vae_model_dir": "/hpc/group/youlab/jl841/test/models/",
+    "log_dir": "/hpc/group/youlab/jl841/test/logs/"
+    },
+    "model_architecture": {
+      "latent_dim_list": [4, 8, 16, 32, 64],
+      "latent_channel": 16,
+      "dropout_rate": 0.1
+    },
+    "dataset": {
+      "outputs_filename": "all_outputs_cont.npy",
+      "types_filename": "all_types_cont.npy",
+      "params_filename": "all_params_cont.npy",
+      "validation_split": 0.1,
+      "test_split": 0.1,
+      "plot_examples": false,
+      "random_state": 25,
+      "scaling_ranges": {
+        "DC": [0.0005, 0.125],
+        "aC": [0.1, 1],
+        "aA": [100, 100000],
+        "aT": [10, 8000],
+        "aL": [5, 500],
+        "dA": [0.001, 0.1],
+        "dT": [3, 300],
+        "dL": [0.144, 14.4],
+        "alpha": [1, 5],
+        "beta": [2, 2000],
+        "Kphi": [1, 10],
+        "N0": [200000, 5000000]
+      },
+      "scaling_options": ["exp", "linear", "exp", "exp", "exp", "exp", "exp", "exp", "linear", "exp", "linear", "linear"],
+      "selected_params": ["DC", "aC", "aA", "aT", "aL", "dA", "dT", "dL", "alpha", "beta", "Kphi", "N0"],
+      "all_params": ["DC", "DN", "DA", "DB", "aC", "aA", "aB", "aT", "aL", "bN", "dA", "dB", "dT", "dL", "k1", "k2", "KN", "KP", "KT", "KA", "KB", "alpha", "beta", "Cmax", "a", "b", "m", "n", "Kphi", "l", "N0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G12", "G13", "G14", "G15", "G16", "G17", "G18", "G19"]
+    },
+    "device": "cuda",
+    "checkpointing": {
+      "save_checkpoints": true,
+      "checkpoint_interval": 100,
+      "checkpoint_dir": "/hpc/group/youlab/jl841/test/checkpoints/"
+    },
+    "performance": {
+      "plot_examples": true
+  }
+  }
+  

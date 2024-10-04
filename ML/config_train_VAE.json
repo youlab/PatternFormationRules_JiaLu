@@ -1,0 +1,46 @@
+{
+  "model_name": "VAE.pt",
+  "training_parameters": {
+    "batch_size": 32,
+    "epochs": 1000,
+    "learning_rate": 3e-5,
+    "min_lr": 5e-6,
+    "gamma":0.99,
+    "alpha":2e-5,
+    "weight_decay":1e-5,
+    "optimizer": "Adam",
+    "loss_function": "CrossEntropyLoss",
+    "warmup_epochs": 10,
+    "early_stopping": true,
+    "patience":30
+  },
+  "paths": {
+    "root_dir": "/hpc/group/youlab/jl841/test/",
+    "data_dir": "/hpc/group/youlab/jl841/test/data/",
+    "model_dir": "/hpc/group/youlab/jl841/test/models/",
+    "log_dir": "/hpc/group/youlab/jl841/test/logs/"
+  },
+  "model_architecture": {
+    "latent_dim": 16,
+    "latent_channel": 16,
+    "dropout_rate": 0.1
+  },
+  "dataset": {
+    "outputs_filename": "all_outputs_cont.npy",
+    "types_filename": "all_types_cont.npy",
+    "params_filename": "all_params_cont.txt",
+    "validation_split": 0.1,
+    "test_split": 0.1,
+    "plot_examples": false,
+    "random_state": 25
+  },
+  "device": "cuda",
+  "checkpointing": {
+    "save_checkpoints": true,
+    "checkpoint_interval": 100,
+    "checkpoint_dir": "/hpc/group/youlab/jl841/test/checkpoints/"
+  },
+  "performance": {
+    "plot_examples": true
+  }
+}
