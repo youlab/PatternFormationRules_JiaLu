@@ -1,0 +1,21 @@
+{
+    "paths":{
+        "output_dir": "/myfolder/output/",
+        "data_dir_1": "/myfolder/data/",
+        "data_dir_2": "/myfolder/augment_data_1/",
+        "data_dir_3": "/myfolder/augment_data_2/",
+        "output_filename_1": "all_outputs.npy",
+        "output_filename_2": "filtered_PDE_outputs.npy",
+        "output_filename_3": "filtered_PDE_outputs.npy",
+        "params_filename_1": "all_params.npy",
+        "params_filename_2": "filtered_PDE_params.npy",
+        "params_filename_3": "filtered_PDE_params.npy",
+        "types_filename_1": "all_types.npy",
+        "types_filename_2": "filtered_PDE_types.npy",
+        "types_filename_3": "filtered_PDE_types.npy"
+    },
+    "dataset": {
+        "selected_params": ["DC", "aC", "aA", "aT", "aL", "dA", "dT", "dL", "alpha", "beta", "Kphi", "N0"],
+        "all_params": ["DC", "DN", "DA", "DB", "aC", "aA", "aB", "aT", "aL", "bN", "dA", "dB", "dT", "dL", "k1", "k2", "KN", "KP", "KT", "KA", "KB", "alpha", "beta", "Cmax", "a", "b", "m", "n", "Kphi", "l", "N0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G12", "G13", "G14", "G15", "G16", "G17", "G18", "G19"]
+  }     
+}

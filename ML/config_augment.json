@@ -1,0 +1,16 @@
+{
+  "paths": {
+      "data_dir": "/myfolder/data/",
+      "output_dir": "/myfolder/augment_data/"
+  },
+  "original_dataset":{
+       "outputs_filename": "all_outputs.npy",
+       "types_filename": "all_types.npy",
+       "params_filename": "all_params.txt"
+  },
+  "augmented_dataset": {
+        "num_to_augment": 10000,
+        "selected_params": ["DC", "aC", "aA", "aT", "aL", "dA", "dT", "dL", "alpha", "beta", "Kphi", "N0"],
+        "all_params": ["DC", "DN", "DA", "DB", "aC", "aA", "aB", "aT", "aL", "bN", "dA", "dB", "dT", "dL", "k1", "k2", "KN", "KP", "KT", "KA", "KB", "alpha", "beta", "Cmax", "a", "b", "m", "n", "Kphi", "l", "N0", "G1", "G2", "G3", "G4", "G5", "G6", "G7", "G8", "G9", "G10", "G11", "G12", "G13", "G14", "G15", "G16", "G17", "G18", "G19"]
+      }
+}
