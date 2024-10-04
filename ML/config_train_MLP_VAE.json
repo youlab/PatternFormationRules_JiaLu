@@ -20,11 +20,11 @@
     "patience":30
   },
   "paths": {
-    "root_dir": "/hpc/group/youlab/jl841/test/",
-    "data_dir": "/hpc/group/youlab/jl841/test/data/",
-    "model_dir": "/hpc/group/youlab/jl841/test/models/",
-    "vae_model_dir": "/hpc/group/youlab/jl841/test/models/",
-    "log_dir": "/hpc/group/youlab/jl841/test/logs/"
+    "root_dir": "/myfolder/test/",
+    "data_dir": "/myfolder/data/",
+    "model_dir": "/myfolder/models/",
+    "vae_model_dir": "/myfolder/models/",
+    "log_dir": "/myfolder/logs/"
   },
   "model_architecture": {
     "latent_dim": 16,
@@ -61,7 +61,7 @@
   "checkpointing": {
     "save_checkpoints": true,
     "checkpoint_interval": 100,
-    "checkpoint_dir": "/hpc/group/youlab/jl841/test/checkpoints/"
+    "checkpoint_dir": "/myfolder/checkpoints/"
   }, 
   "performance": {
     "plot_examples": true
