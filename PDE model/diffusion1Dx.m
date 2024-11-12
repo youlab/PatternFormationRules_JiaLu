@@ -1,4 +1,4 @@
-function DOM = diffusion1Dx_YB(D, n, dr, dt)
+function DOM = diffusion1Dx(D, n, dr, dt)
     
 
 e = ones(n, 1);
