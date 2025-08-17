@@ -3,13 +3,15 @@
 % close all
 clear all
 
-taskID = str2num(getenv('SLURM_ARRAY_TASK_ID'))
+taskID = str2num(getenv('SLURM_ARRAY_TASK_ID'));
 
 % Directory for data storage
 data_dir = pwd;
+
 if exist(data_dir, 'dir') ~= 7
     mkdir(data_dir);
 end
+
 
 %% parameters
 parameters_screening;
@@ -40,30 +42,29 @@ h = param.L / (param.N-1);
 
 % Diffusion 
 
-DOMC = diffusion1Dx(param.G1, N, h, param.dt);
-DOMN = diffusion1Dx(param.G3, N, h, param.dt);
-DOMA = diffusion1Dx(param.G5, N, h, param.dt);
-DOMB = diffusion1Dx(param.G9, N, h, param.dt);
-
-AOM = getaom(N, param.L);
+DOMC = diffusion1Dx_NL(param.G1, N, h, param.dt);
+DOMN = diffusion1Dx_NL(param.G3, N, h, param.dt);
+DOMA = diffusion1Dx_NL(param.G5, N, h, param.dt);
+DOMB = diffusion1Dx_NL(param.G9, N, h, param.dt);
 
 % Advection
-beta1 = param.G1 * param.dt / h;
-
+AOM = getaom(N, param.L);
 
 tic 
 
+t = 0;
 for i = 1:nt % time step
-    t = t + param.dt
+
+    t = (i-1)*param.dt;
+    
     % ------------------------------------------------------------
     % Solve PDE
     % ------------------------------------------------------------
     % Solve advection -> diffusion -> reaction
-    
+
     % -------------------------Advection-----------------------------------   
-    fprintf('advection')
-    
-    [Ly_pre,T_pre,P_pre,RFP_pre,CFP_pre] = Advect(Ly_pre,T_pre,P_pre,RFP_pre,CFP_pre,Ce_pre,AOM,param,param.dt);
+    %fprintf('advection')
+    [Ly_pre,T_pre,P_pre,RFP_pre,CFP_pre] =  Advect(Ly_pre,T_pre,P_pre,RFP_pre,CFP_pre,Ce_pre, AOM, param, param.dt); 
 
     % Ensure non-negative values
     Ly_pre = max(Ly_pre, 0);
@@ -71,28 +72,27 @@ for i = 1:nt % time step
     P_pre = max(P_pre, 0);
     RFP_pre = max(RFP_pre, 0);
     CFP_pre = max(CFP_pre, 0);
-        
+
     % -------------------------Diffusion-----------------------------------
-    fprintf('diffusion') % 
+    %fprintf('diffusion') % 
     Ce_pre = DOMC \ Ce_pre;
     Nu_pre = DOMN \ Nu_pre;
     A_pre  = DOMA \ A_pre;
     B_pre  = DOMB \ B_pre;
-    
+
     % Ensure non-negative values
     Ce_pre = max(Ce_pre, 0);
     Nu_pre = max(Nu_pre, 0);
     A_pre = max(A_pre, 0);
     B_pre = max(B_pre, 0);
-    
 
     % -------------------------reaction-----------------------------------
-    fprintf('reaction')
-    
+    %fprintf('reaction')
+
     inputs = [Ce_pre;Nu_pre;A_pre;B_pre;Ly_pre;T_pre;P_pre;RFP_pre;CFP_pre];
-    sol = ode23(@adr_func_react, [0 param.dt], inputs, options, param, t);
-    vec = (deval(sol, param.dt));
-    
+    sol = ode23(@(tt, vec) adr_func_react(tt, vec, param), [0 param.dt], inputs, options);
+    vec = deval(sol, param.dt);
+
     % update initial values for the next interation
     Ce_pre = vec(1:N);
     Nu_pre = vec(N+1:2*N);
@@ -113,11 +113,11 @@ for i = 1:nt % time step
     P_pre = max(P_pre, 0);
     RFP_pre = max(RFP_pre, 0);
     CFP_pre = max(CFP_pre, 0);
-    
+
     % ------------------------------------------------------------
     % Update accummulative fluorescent expression pattern
     % ------------------------------------------------------------
-    % calculate total RFP distribution
+    % calculate total fluorescent distribution
     total_RFP = Ce_pre.*RFP_pre;
     total_CFP = Ce_pre.*CFP_pre;
 
@@ -137,7 +137,7 @@ for i = 1:nt % time step
     hist_RFP(:, i) = total_RFP;
     hist_CFP(:, i) = total_CFP;
     hist_t(:, i)   = t;
-    
+
     if Ce_pre(end) >= 0.05*max(Ce_pre);
         break
     end 
@@ -146,7 +146,7 @@ end
 
 toc
 
-% Save
+% Save history data to .mat file
 param.hist_Ce = hist_Ce;
 param.hist_Nu = hist_Nu;
 param.hist_A = hist_A;
@@ -160,6 +160,8 @@ param.hist_RFP = hist_RFP;
 param.hist_CFP = hist_CFP;
 param.hist_t = hist_t;
 
-% save in .mat file
-filename = [data_dir, num2str(taskID) '.mat'];
+% Save multiple ring parameter set
+filename = fullfile(data_dir, [num2str(taskID), '.mat']);
 save(filename, "param");
+
+    
