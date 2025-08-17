@@ -42,10 +42,10 @@ h = param.L / (param.N-1);
 
 % Diffusion 
 
-DOMC = diffusion1Dx_NL(param.G1, N, h, param.dt);
-DOMN = diffusion1Dx_NL(param.G3, N, h, param.dt);
-DOMA = diffusion1Dx_NL(param.G5, N, h, param.dt);
-DOMB = diffusion1Dx_NL(param.G9, N, h, param.dt);
+DOMC = diffusion1Dx(param.G1, N, h, param.dt);
+DOMN = diffusion1Dx(param.G3, N, h, param.dt);
+DOMA = diffusion1Dx(param.G5, N, h, param.dt);
+DOMB = diffusion1Dx(param.G9, N, h, param.dt);
 
 % Advection
 AOM = getaom(N, param.L);
